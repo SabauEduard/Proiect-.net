@@ -6,12 +6,10 @@ namespace Proiect_.net.Models
 {
     public class Belongs : BaseEntity
     {
-        [Key, Column(Order = 1)]
         public Guid BookId { get; set; }
-        public Book Book { get; set; } = default!;
+        public virtual Book Book { get; set; } = default!;
         
-        [Key, Column(Order = 2)]
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; } = default!;
+        public virtual Category Category { get; set; } = default!;
     }
 }

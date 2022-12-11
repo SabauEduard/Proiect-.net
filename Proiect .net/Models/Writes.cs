@@ -6,12 +6,10 @@ namespace Proiect_.net.Models
 {
     public class Writes : BaseEntity
     {
-        [Key, Column(Order = 1)]
         public Guid BookId { get; set; } 
-        public Book Book { get; set; } = default!;
+        public virtual Book Book { get; set; } = default!;
         
-        [Key, Column(Order = 2)]
         public Guid AuthorId { get; set; }
-        public Author Author { get; set; } = default!;
+        public virtual Author Author { get; set; } = default!;
     }
 }
