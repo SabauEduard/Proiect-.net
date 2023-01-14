@@ -12,6 +12,8 @@ namespace Proiect_.net.DataBase
         public DbSet<Belongs> BelongsTable { get; set; }
         public DbSet<Borrows> BorrowsTable { get; set; }
         public DbSet<Writes> WritesTable { get; set; }
+        public DbSet<Penalty> PenaltyTable { get; set; }
+        public DbSet<PenaltyReceipt> PenaltyReceiptTable { get; set; }
 
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) { }
 
@@ -60,7 +62,15 @@ namespace Proiect_.net.DataBase
                 .WithMany(u => u.Borrows)
                 .HasForeignKey(br => br.UserId);
 
-         
+            modelBuilder.Entity<Penalty>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Penalties)
+                .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<PenaltyReceipt>()
+                .HasOne(pr => pr.Penalty)
+                .WithOne(p => p.PenaltyReceipt);
+              
         }
     }
 }

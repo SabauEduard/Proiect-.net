@@ -17,5 +17,6 @@ namespace Proiect_.net.Models
 
         public Role Role { get; set; }
         public virtual ICollection<Borrows> Borrows { get; set; } = default!;
+        public virtual ICollection<Penalty> Penalties { get; set; } = default!;
     }
 }
