@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Proiect_.net.Models.DTOs.Books;
-using Proiect_.net.Services;
+using Proiect_.net.Services.BookService;
 
 namespace Proiect_.net.Controllers
 {

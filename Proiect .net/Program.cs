@@ -14,6 +14,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddUtils();
+builder.Services.AddUnitOfWork();
 
 builder.Services.AddControllersWithViews();
 

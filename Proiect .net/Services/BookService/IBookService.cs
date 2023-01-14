@@ -1,6 +1,6 @@
 ﻿using Proiect_.net.Models;
 
-namespace Proiect_.net.Services
+namespace Proiect_.net.Services.BookService
 {
     public interface IBookService
     {
@@ -8,6 +8,6 @@ namespace Proiect_.net.Services
         public Task DeleteBook(Guid BookId);
         public Task<Book?> GetBook(Guid BookId);
         public Task<IEnumerable<Book>> GetAllBooks();
-        
+
     }
 }
