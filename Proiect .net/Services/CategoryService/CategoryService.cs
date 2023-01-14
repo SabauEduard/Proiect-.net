@@ -18,7 +18,7 @@ namespace Proiect_.net.Services.CategoryService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task DeleteCategory(Guid CategoryId)
+        public async Task DeleteCategoryById(Guid CategoryId)
         {
             var category = await _unitOfWork.categoryRepository.FindByIdAsync(CategoryId);
             if (category == null)
@@ -32,7 +32,7 @@ namespace Proiect_.net.Services.CategoryService
             return await _unitOfWork.categoryRepository.GetAllAsync();
         }
 
-        public async Task<Category> GetCategory(Guid CategoryId)
+        public async Task<Category> GetCategoryById(Guid CategoryId)
         {
             return await _unitOfWork.categoryRepository.FindByIdAsync(CategoryId);
         }

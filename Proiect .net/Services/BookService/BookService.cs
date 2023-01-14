@@ -5,7 +5,7 @@ namespace Proiect_.net.Services.BookService
 {
     public class BookService : IBookService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public BookService(IUnitOfWork unitOfWork)
         {
@@ -28,7 +28,7 @@ namespace Proiect_.net.Services.BookService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task DeleteBook(Guid BookId)
+        public async Task DeleteBookById(Guid BookId)
         {
             var book = await _unitOfWork.bookRepository.FindByIdAsync(BookId);
             if (book == null)
@@ -42,7 +42,7 @@ namespace Proiect_.net.Services.BookService
             return await _unitOfWork.bookRepository.GetAllAsync();
         }
 
-        public async Task<Book?> GetBook(Guid BookId)
+        public async Task<Book?> GetBookById(Guid BookId)
         {
             return await _unitOfWork.bookRepository.FindByIdAsync(BookId);
         }

@@ -25,13 +25,13 @@ namespace Proiect_.net.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            await _userService.DeleteUser(id);
+            await _userService.DeleteUserById(id);
             return NoContent();
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(Guid id)
         {
-            var user = await _userService.GetUser(id);
+            var user = await _userService.GetUserById(id);
             return user is null? NotFound() : Ok(user);
         }
         [HttpGet]

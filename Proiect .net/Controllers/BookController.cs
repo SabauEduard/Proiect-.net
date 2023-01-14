@@ -30,13 +30,13 @@ namespace Proiect_.net.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBookById([FromRoute]Guid id)
         {
-            var book = await _bookService.GetBook(id);
+            var book = await _bookService.GetBookById(id);
             return book is null? NotFound() : Ok(book);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(Guid id)
         {
-            await _bookService.DeleteBook(id);
+            await _bookService.DeleteBookById(id);
             return NoContent();
         }
     }

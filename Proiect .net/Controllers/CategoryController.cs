@@ -26,14 +26,14 @@ namespace Proiect_.net.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
-            await _categoryService.DeleteCategory(id);
+            await _categoryService.DeleteCategoryById(id);
             return NoContent();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategory(Guid id)
         {
-            var category = await _categoryService.GetCategory(id);
+            var category = await _categoryService.GetCategoryById(id);
             return category is null ? NotFound() : Ok(category);
         }
 

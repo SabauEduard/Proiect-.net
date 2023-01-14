@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Proiect_.net.Models;
 using Proiect_.net.Models.Enums;
 
-namespace Lab4_13.Helpers.Attributes
+namespace Proiect_.net.Helpers.Attributes
 {
-    public class AuthorizationAttribute: Attribute, IAuthorizationFilter
+    public class AuthorizationAttribute : Attribute, IAuthorizationFilter
     {
         private readonly ICollection<Role> _roles;
 
@@ -16,17 +16,17 @@ namespace Lab4_13.Helpers.Attributes
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var unauthorizedStatusObject = new JsonResult(new { Message = "Unauthorzed" })
+            var unauthorizedStatusObject = new JsonResult(new { Message = "Unauthorized" })
             { StatusCode = StatusCodes.Status401Unauthorized };
 
 
-            if(_roles == null)
+            if (_roles == null)
             {
-                context.Result = unauthorizedStatusObject;  
+                context.Result = unauthorizedStatusObject;
             }
 
             var user = (User)context.HttpContext.Items["User"];
-            if(user == null || !_roles.Contains(user.Role))
+            if (user == null || !_roles.Contains(user.Role))
             {
                 context.Result = unauthorizedStatusObject;
             }

@@ -24,13 +24,13 @@ namespace Proiect_.net.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor(Guid id)
         {
-            await _authorService.DeleteAuthor(id);
+            await _authorService.DeleteAuthorById(id);
             return NoContent();
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAuthor(Guid id)
         {
-            var author = await _authorService.GetAuthor(id);
+            var author = await _authorService.GetAuthorById(id);
             return author is null ? NotFound() : Ok(author);
         }
         [HttpGet]

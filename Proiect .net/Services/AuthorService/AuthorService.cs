@@ -5,7 +5,7 @@ namespace Proiect_.net.Services.AuthorService
 {
     public class AuthorService : IAuthorService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AuthorService(IUnitOfWork unitOfWork)
         {
@@ -24,7 +24,7 @@ namespace Proiect_.net.Services.AuthorService
             await _unitOfWork.authorRepository.CreateAsync(author);
             await _unitOfWork.SaveAsync();
         }        
-        public async Task DeleteAuthor(Guid AuthorId)
+        public async Task DeleteAuthorById(Guid AuthorId)
         {
             var author = await _unitOfWork.authorRepository.FindByIdAsync(AuthorId);
             if (author == null)
@@ -32,7 +32,7 @@ namespace Proiect_.net.Services.AuthorService
             _unitOfWork.authorRepository.Delete(author);
             await _unitOfWork.SaveAsync();
         }
-        public async Task<Author> GetAuthor(Guid AuthorId)
+        public async Task<Author> GetAuthorById(Guid AuthorId)
         {
             return await _unitOfWork.authorRepository.FindByIdAsync(AuthorId);
         }

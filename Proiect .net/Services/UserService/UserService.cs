@@ -6,7 +6,7 @@ namespace Proiect_.net.Services.UserService
 {
     public class UserService : IUserService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UserService(IUnitOfWork unitOfWork)
         {
@@ -27,7 +27,7 @@ namespace Proiect_.net.Services.UserService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task DeleteUser(Guid UserId)
+        public async Task DeleteUserById(Guid UserId)
         {
             var user = await _unitOfWork.userRepository.FindByIdAsync(UserId);
             if(user == null)
@@ -41,9 +41,13 @@ namespace Proiect_.net.Services.UserService
             return await _unitOfWork.userRepository.GetAllAsync();
         }
 
-        public async Task<User> GetUser(Guid UserId)
+        public async Task<User> GetUserById(Guid UserId)
         {
             return await _unitOfWork.userRepository.FindByIdAsync(UserId);
+        }
+        public User GetUserByUsername(string Username)
+        {
+            return _unitOfWork.userRepository.FindByUsername(Username);
         }
     }
 }
