@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Authors;
 
 namespace Proiect_.net.Services.AuthorService
 {
@@ -7,7 +8,8 @@ namespace Proiect_.net.Services.AuthorService
         public Task CreateAuthor(string LastName, string FirstName, string? Nationality);
         public Task DeleteAuthorById(Guid AuthorId);
         public Task<Author> GetAuthorById(Guid AuthorId);
-        public Task<IEnumerable<Author>> GetAllAuthors();
-       
+        public Task<IEnumerable<AuthorResponseDTO>> GetAllAuthors();
+
+
     }
 }

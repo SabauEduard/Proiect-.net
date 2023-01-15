@@ -1,14 +1,17 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Users;
 using Proiect_.net.Models.Enums;
 
 namespace Proiect_.net.Services.UserService
 {
     public interface IUserService
     {
-        public Task CreateUser(string FirstName, string LastName, string Email, string Username, string PasswordHash, Role Role);
+        public Task<UserResponseDTO> CreateUser(string FirstName, string LastName, string Email, string Username, string Password);
+        public Task<UserResponseDTO> Authenticate(string Username, string Password);
         public Task DeleteUserById(Guid UserId);
         public Task<User> GetUserById(Guid UserId);
         public User GetUserByUsername(string Username);
         public Task<IEnumerable<User>> GetAllUsers();
+
     }
 }

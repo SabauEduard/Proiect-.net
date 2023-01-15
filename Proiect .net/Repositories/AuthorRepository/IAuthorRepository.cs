@@ -8,5 +8,6 @@ namespace Proiect_.net.Repositories.AuthorRepository
         public IEnumerable<Author> FindByLastName(string LastName);
         public IEnumerable<Author> FindByFirstName(string FirstName);
         public IEnumerable<Author> FindByNationality(string Nationality);
+        public IEnumerable<(Guid, int)> NumberOfBooksByAuthors();
     }
 }

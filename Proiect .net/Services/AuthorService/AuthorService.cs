@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Authors;
 using Proiect_.net.Repositories.UnitOfWork;
 
 namespace Proiect_.net.Services.AuthorService
@@ -37,9 +38,11 @@ namespace Proiect_.net.Services.AuthorService
             return await _unitOfWork.authorRepository.FindByIdAsync(AuthorId);
         }
 
-        public async Task<IEnumerable<Author>> GetAllAuthors()
+        public async Task<IEnumerable<AuthorResponseDTO>> GetAllAuthors()
         {
-            return await _unitOfWork.authorRepository.GetAllAsync();
+            var numberOfBooksByAuthor = _unitOfWork.authorRepository.NumberOfBooksByAuthors();
+            var authors = await _unitOfWork.authorRepository.GetAllAsync();
+            return authors.ConvertAll(a => new AuthorResponseDTO(a, numberOfBooksByAuthor.FirstOrDefault(x => x.Item1 == a.Id).Item2));
         }
     }
 }

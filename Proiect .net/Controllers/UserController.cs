@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Proiect_.net.Helpers.Attributes;
 using Proiect_.net.Models.DTOs.Users;
+using Proiect_.net.Models.Enums;
 using Proiect_.net.Services.UserService;
 
 namespace Proiect_.net.Controllers
@@ -17,10 +19,15 @@ namespace Proiect_.net.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(UserRequestDTO newUser)
+        public async Task<ActionResult<UserResponseDTO>> Register(UserRegisterRequestDTO newUser)
         {
-            await _userService.CreateUser(newUser.FirstName, newUser.LastName, newUser.Email, newUser.Username, newUser.PasswordHash, newUser.Role);
-            return Ok();
+            return Ok(await _userService.CreateUser(newUser.FirstName, newUser.LastName, newUser.Email, newUser.Username, newUser.Password));           
+        }
+        [HttpPost("authenticate")]
+        public async Task<ActionResult<UserResponseDTO>> Authenticate(UserLoginRequestDTO User)
+        {
+            var response = await _userService.Authenticate(User.Username, User.Password);
+            return response is null ? BadRequest("Your username/email/password is wrong!") : Ok(response);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
@@ -35,6 +42,7 @@ namespace Proiect_.net.Controllers
             return user is null? NotFound() : Ok(user);
         }
         [HttpGet]
+        [Authorization(Role.User)]
         public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await _userService.GetAllUsers());

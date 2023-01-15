@@ -1,22 +1,18 @@
-﻿using Proiect_.net.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Proiect_.net.Models.DTOs.Users
 {
-    public class UserRequestDTO
+    public class UserRegisterRequestDTO
     {
         [Required]
         public string Username { get; set; }
-
         [Required]
-        public string PasswordHash { get; set; }
-
+        public string Password { get; set; }
         [Required]
         public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         [Required]
-        public Role Role { get; set; }
-
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
     }
 }

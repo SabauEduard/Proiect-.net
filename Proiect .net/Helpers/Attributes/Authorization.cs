@@ -17,15 +17,15 @@ namespace Proiect_.net.Helpers.Attributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var unauthorizedStatusObject = new JsonResult(new { Message = "Unauthorized" })
-            { StatusCode = StatusCodes.Status401Unauthorized };
-
+            { StatusCode = StatusCodes.Status401Unauthorized };           
 
             if (_roles == null)
             {
                 context.Result = unauthorizedStatusObject;
             }
 
-            var user = (User)context.HttpContext.Items["User"];
+            var user = (User)context.HttpContext.Items["User"];          
+
             if (user == null || !_roles.Contains(user.Role))
             {
                 context.Result = unauthorizedStatusObject;

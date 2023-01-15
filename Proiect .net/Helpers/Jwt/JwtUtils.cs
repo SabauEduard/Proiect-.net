@@ -19,7 +19,7 @@ namespace Proiect_.net.Helpers.Jwt
         public string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtToken);
+            var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtSecret);
 
             var tokenDesriptor = new SecurityTokenDescriptor
             {
@@ -44,13 +44,13 @@ namespace Proiect_.net.Helpers.Jwt
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtToken);
+            var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtSecret);
 
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(appPrivateKey),
-                ValidateIssuer = true,
+                ValidateIssuer = false,
                 ValidateAudience = false,
                 ClockSkew = TimeSpan.Zero,
             };

@@ -1,6 +1,7 @@
 ﻿using Proiect_.net.Models;
 using Proiect_.net.DataBase;
 using Proiect_.net.Repositories.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Proiect_.net.Repositories.AuthorRepository
 {
@@ -20,6 +21,13 @@ namespace Proiect_.net.Repositories.AuthorRepository
         public IEnumerable<Author> FindByNationality(string Nationality)
         {
             return _table.Where(a => a.Nationality == Nationality);
+        }
+        public IEnumerable<(Guid, int)> NumberOfBooksByAuthors()
+        {
+            var grouping =  _context.WritesTable.GroupBy(a => a.AuthorId).ToList();
+            var result = grouping.ConvertAll(x => (x.Key, x.Count()));
+
+            return result;
         }
     }
 }
