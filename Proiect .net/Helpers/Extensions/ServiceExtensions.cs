@@ -14,6 +14,7 @@ using Proiect_.net.Services.AuthorService;
 using Proiect_.net.Services.BookService;
 using Proiect_.net.Services.CategoryService;
 using Proiect_.net.Services.UserService;
+using Proiect_.net.Services.WritesService;
 
 namespace Proiect_.net.Helpers.Extensions
 {
@@ -40,6 +41,7 @@ namespace Proiect_.net.Helpers.Extensions
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IWritesService, WritesService>();
 
             return services;
         }    
