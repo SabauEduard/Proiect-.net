@@ -9,13 +9,15 @@
         public string LastName { get; set; }
 
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
 
-        public UserResponseDTO(User user, string token)
+        public UserResponseDTO(User user, string token, string refreshToken)
         {
             Id = user.Id;
             FirstName = user.FirstName;
             LastName = user.LastName;
             Token = token;
+            RefreshToken = refreshToken;
             Email = user.Email;
             Username = user.Username;
         }

@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_.net.Models.DTOs.Write
+namespace Proiect_.net.Models.DTOs.Borrow
 {
-    public class WritesRequestDTO
+    public class BorrowsRequestDTO
     {
         [Required]
         public Guid BookId { get; set; }
         [Required]
-        public Guid AuthorId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

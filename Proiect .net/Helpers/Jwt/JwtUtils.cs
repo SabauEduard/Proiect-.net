@@ -27,7 +27,27 @@ namespace Proiect_.net.Helpers.Jwt
                 {
                     new Claim("id", user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(10),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(appPrivateKey), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDesriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
+        public string GenerateRefreshToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtSecret);
+
+            var tokenDesriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("id", user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(appPrivateKey), SecurityAlgorithms.HmacSha256Signature)
             };
 

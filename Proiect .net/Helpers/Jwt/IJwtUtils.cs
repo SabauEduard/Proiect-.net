@@ -6,5 +6,6 @@ namespace Proiect_.net.Helpers.Jwt
     {
         public string GenerateJwtToken(User user);
         public Guid ValidateJwtToken(string token);
+        public string GenerateRefreshToken(User user);
     }
 }

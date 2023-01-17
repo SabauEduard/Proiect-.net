@@ -6,7 +6,7 @@ namespace Proiect_.net.Services.CategoryService
     {
         public Task CreateCategory(string Name);
         public Task DeleteCategoryById(Guid CategoryId);
-        public Task<Category> GetCategoryById(Guid CategoryId);
+        public Task<Category?> GetCategoryById(Guid CategoryId);
         public Task<IEnumerable<Category>> GetAllCategories();
     }
 }

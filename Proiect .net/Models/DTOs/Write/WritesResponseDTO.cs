@@ -2,9 +2,9 @@
 {
     public class WritesResponseDTO
     {
-        public Guid Id;
-        public Guid AuthorId;
-        public Guid BookId;
+        public Guid Id { get; set; }
+        public Guid AuthorId { get; set; }
+        public Guid BookId  { get; set; }
 
         public WritesResponseDTO(Writes writes)
         {

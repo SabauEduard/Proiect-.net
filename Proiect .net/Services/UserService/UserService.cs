@@ -31,8 +31,28 @@ namespace Proiect_.net.Services.UserService
             await _unitOfWork.SaveAsync();
 
             var token = _jwtUtils.GenerateJwtToken(user);
+            var refreshToken = _jwtUtils.GenerateRefreshToken(user);
 
-            return new UserResponseDTO(user, token);
+            return new UserResponseDTO(user, token, refreshToken);
+        }
+        public async Task<UserResponseDTO> CreateAdmin(string FirstName, string LastName, string Email, string Username, string Password)
+        {
+            var admin = new User()
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                Email = Email,
+                Username = Username,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(Password),
+                Role = Role.Admin
+            };
+            await _unitOfWork.userRepository.CreateAsync(admin);
+            await _unitOfWork.SaveAsync();
+
+            var token = _jwtUtils.GenerateJwtToken(admin);
+            var refreshToken = _jwtUtils.GenerateRefreshToken(admin);
+
+            return new UserResponseDTO(admin, token, refreshToken);
         }
         public async Task<UserResponseDTO?> Authenticate(string Username, string Password)
         {
@@ -47,14 +67,29 @@ namespace Proiect_.net.Services.UserService
                 return null;
 
             var token = _jwtUtils.GenerateJwtToken(user);
+            var refreshToken = _jwtUtils.GenerateRefreshToken(user);
 
-            return new UserResponseDTO(user, token);
+            return new UserResponseDTO(user, token, refreshToken);
+        }
+
+        public async Task<string?> RefreshToken(string OldToken)
+        {
+            Guid userId = _jwtUtils.ValidateJwtToken(OldToken);
+            if (userId == Guid.Empty)
+                return null;
+
+            var user = await _unitOfWork.userRepository.FindByIdAsync(userId);
+            var newToken = _jwtUtils.GenerateJwtToken(user);
+
+            return newToken;
+
         }
         public async Task DeleteUserById(Guid UserId)
         {
             var user = await _unitOfWork.userRepository.FindByIdAsync(UserId);
             if(user == null)
                 return;
+   
             _unitOfWork.userRepository.Delete(user);
             await _unitOfWork.SaveAsync();
         }
@@ -72,5 +107,6 @@ namespace Proiect_.net.Services.UserService
         {
             return _unitOfWork.userRepository.FindByUsername(Username);
         }
+
     }
 }

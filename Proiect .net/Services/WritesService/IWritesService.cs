@@ -6,7 +6,7 @@ namespace Proiect_.net.Services.WritesService
     {
         public Task CreateWrites(Guid AuthorId, Guid BookId);
         public Task DeleteWritesById(Guid WritesId);
-        public Task<Writes> GetWritesById(Guid WritesId);
+        public Task<Writes?> GetWritesById(Guid WritesId);
         public Task<IEnumerable<Writes>> GetAllWrites();
     }
 }
