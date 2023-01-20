@@ -16,8 +16,12 @@ namespace Proiect_.net.Services.UserService
             _unitOfWork = unitOfWork;
             _jwtUtils = jwtUtils;
         }
-        public async Task<UserResponseDTO> CreateUser(string FirstName, string LastName, string Email, string Username, string Password)
+        public async Task<UserResponseDTO?> CreateUser(string FirstName, string LastName, string Email, string Username, string Password)
         {
+            var check_user = _unitOfWork.userRepository.FindByUsername(Username);
+            if (check_user is not null)
+                return null;
+
             var user = new User()
             {
                 FirstName = FirstName,
@@ -35,8 +39,12 @@ namespace Proiect_.net.Services.UserService
 
             return new UserResponseDTO(user, token, refreshToken);
         }
-        public async Task<UserResponseDTO> CreateAdmin(string FirstName, string LastName, string Email, string Username, string Password)
+        public async Task<UserResponseDTO?> CreateAdmin(string FirstName, string LastName, string Email, string Username, string Password)
         {
+            var check_user = _unitOfWork.userRepository.FindByUsername(Username);
+            if (check_user is not null)
+                return null;
+
             var admin = new User()
             {
                 FirstName = FirstName,
@@ -72,16 +80,17 @@ namespace Proiect_.net.Services.UserService
             return new UserResponseDTO(user, token, refreshToken);
         }
 
-        public async Task<string?> RefreshToken(string OldToken)
+        public async Task<UserResponseDTO?> RefreshToken(string OldRefreshToken)
         {
-            Guid userId = _jwtUtils.ValidateJwtToken(OldToken);
+            Guid userId = _jwtUtils.ValidateJwtToken(OldRefreshToken);
             if (userId == Guid.Empty)
                 return null;
 
             var user = await _unitOfWork.userRepository.FindByIdAsync(userId);
             var newToken = _jwtUtils.GenerateJwtToken(user);
+            var refreshToken = _jwtUtils.GenerateRefreshToken(user);
 
-            return newToken;
+            return new UserResponseDTO(user, newToken, refreshToken);
 
         }
         public async Task DeleteUserById(Guid UserId)
@@ -108,5 +117,10 @@ namespace Proiect_.net.Services.UserService
             return _unitOfWork.userRepository.FindByUsername(Username);
         }
 
+        public IEnumerable<Book?> GetBooksBorrowedByUser(string Username)
+        {
+            var user = _unitOfWork.userRepository.FindByUsername(Username);
+            return _unitOfWork.userRepository.BoooksBorrowedByUser(user.Id);
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Proiect_.net.Repositories
         public IEnumerable<User> FindByLastName(string LastName);
         public User FindByEmail(string Email);
         public User FindByUsername(string Username);
+        public IEnumerable<Book?> BoooksBorrowedByUser(Guid UserId);
     }
 }

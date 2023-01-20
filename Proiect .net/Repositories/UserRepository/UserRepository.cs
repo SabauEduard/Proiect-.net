@@ -28,5 +28,15 @@ namespace Proiect_.net.Repositories.UserRepository
         {
             return _table.FirstOrDefault(u => u.Username == Username);
         }
+
+        public IEnumerable<Book?> BoooksBorrowedByUser(Guid UserId)
+        {
+            var books = from b in _context.BooksTable
+                        join br in _context.BorrowsTable on b.Id equals br.BookId
+                        where br.UserId == UserId
+                        select b;
+                        
+            return books.ToList();
+        }
     }
 }

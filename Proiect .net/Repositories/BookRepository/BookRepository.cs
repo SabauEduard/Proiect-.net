@@ -1,6 +1,7 @@
 ﻿using Proiect_.net.Repositories.GenericRepository;
 using Proiect_.net.DataBase;
 using Proiect_.net.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Proiect_.net.Repositories.BookRepository
 {
@@ -27,5 +28,6 @@ namespace Proiect_.net.Repositories.BookRepository
         {
             return _table.Where(b => b.PageNumber == PageNumber);
         }
+
     }
 }

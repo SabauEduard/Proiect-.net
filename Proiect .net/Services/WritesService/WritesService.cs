@@ -14,7 +14,7 @@ namespace Proiect_.net.Services.WritesService
 
         public async Task CreateWrites(Guid AuthorId, Guid BookId)
         {
-            var writes = new Writes() { AuthorId = AuthorId, BookId = BookId };
+            var writes = new Writes() { Id = Guid.NewGuid(), AuthorId = AuthorId, BookId = BookId };
             await _unitOfWork.writesRepository.CreateAsync(writes);
             await _unitOfWork.SaveAsync();
         }

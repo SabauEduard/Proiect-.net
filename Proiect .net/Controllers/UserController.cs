@@ -21,14 +21,16 @@ namespace Proiect_.net.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserResponseDTO>> Register(UserRegisterRequestDTO newUser)
         {
-            return Ok(await _userService.CreateUser(newUser.FirstName, newUser.LastName, newUser.Email, newUser.Username, newUser.Password));
+            var user = await _userService.CreateUser(newUser.FirstName, newUser.LastName, newUser.Email, newUser.Username, newUser.Password);
+            return user is null ? BadRequest("Username is taken!") : Ok(user);
         }
 
         [HttpPost("admin")]
         [Authorization(Role.Admin)]
         public async Task<ActionResult<UserResponseDTO>> AddAdmin(UserRegisterRequestDTO newAdmin)
         {
-            return Ok(await _userService.CreateAdmin(newAdmin.FirstName, newAdmin.LastName, newAdmin.Email, newAdmin.Username, newAdmin.Password));
+           var admin = await _userService.CreateAdmin(newAdmin.FirstName, newAdmin.LastName, newAdmin.Email, newAdmin.Username, newAdmin.Password);
+           return admin is null ? BadRequest("Username is taken!") : Ok(admin);
         }
 
         [HttpPost("authenticate")]
@@ -39,11 +41,10 @@ namespace Proiect_.net.Controllers
         }
 
         [HttpPost("refreshToken")]
-        [Authorization(Role.Admin, Role.User)]
-        public async Task<ActionResult<string>> RefreshToken(string oldToken)
+        public async Task<ActionResult<UserResponseDTO>> RefreshToken([FromBody]string oldRefreshToken)
         {
-            var response = await _userService.RefreshToken(oldToken);
-            return response is null ? BadRequest("RefreshToken expired, authentication needed or Token is invalid!") : Ok(response);
+            var response = await _userService.RefreshToken(oldRefreshToken);
+            return response is null ? BadRequest("RefreshToken has expired!") : Ok(response);
         }
 
         [HttpDelete("{id}")]
@@ -67,6 +68,13 @@ namespace Proiect_.net.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await _userService.GetAllUsers());
+        }
+
+        [HttpGet("books{username}")]
+        [Authorization(Role.Admin, Role.User)]
+        public IActionResult GetBooksBorrowedByUser(string username)
+        {
+            return Ok(_userService.GetBooksBorrowedByUser(username));
         }
     }
 }

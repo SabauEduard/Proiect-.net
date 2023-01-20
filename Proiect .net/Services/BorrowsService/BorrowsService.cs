@@ -14,7 +14,7 @@ namespace Proiect_.net.Services.BorrowsService
 
         public async Task CreateBorrows(Guid BookId, Guid UserId)
         {
-            var borrows = new Borrows() { BookId = BookId, UserId = UserId };
+            var borrows = new Borrows() { Id = Guid.NewGuid(), BookId = BookId, UserId = UserId };
             await _unitOfWork.borrowsRepository.CreateAsync(borrows);
             await _unitOfWork.SaveAsync();
         }
