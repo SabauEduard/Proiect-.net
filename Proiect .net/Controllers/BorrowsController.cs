@@ -28,8 +28,8 @@ namespace Proiect_.net.Controllers
         [HttpDelete("{id}")]
         [Authorization(Role.Admin, Role.User)]
         public async Task<IActionResult> DeleteBorrows(Guid id)
-        {
-            var borrows = await _borrowsService.GetBorrowsById(id);
+        {           
+            await _borrowsService.DeleteBorrowsById(id);
             return NoContent();
         }
         [HttpGet("{id}")]

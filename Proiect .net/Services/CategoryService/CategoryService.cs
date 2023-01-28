@@ -32,6 +32,11 @@ namespace Proiect_.net.Services.CategoryService
             return await _unitOfWork.categoryRepository.GetAllAsync();
         }
 
+        public IEnumerable<Category> GetCategoriesAndBooks()
+        {
+            return _unitOfWork.categoryRepository.GetCategoriesAndBooks();
+        }
+
         public async Task<Category> GetCategoryById(Guid CategoryId)
         {
             return await _unitOfWork.categoryRepository.FindByIdAsync(CategoryId);

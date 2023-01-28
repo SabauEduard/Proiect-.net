@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models.Base;
+using System.Text.Json.Serialization;
 
 namespace Proiect_.net.Models
 {
@@ -8,6 +9,7 @@ namespace Proiect_.net.Models
         public string Reason { get; set; } = null!;
         public virtual User User { get; set; }
         public Guid UserId { get; set; }
+        [JsonIgnore]
         public virtual PenaltyReceipt PenaltyReceipt { get; set; } = null!;
     }
 }

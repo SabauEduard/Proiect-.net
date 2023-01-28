@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models.Base;
+using System.Text.Json.Serialization;
 
 namespace Proiect_.net.Models
 {
@@ -9,9 +10,12 @@ namespace Proiect_.net.Models
         public string? Description { get; set; } 
         public int PageNumber { get; set; } 
         public string Language { get; set; } = null!;
-        public int ReleaseDate { get; set; } 
-        public virtual ICollection<Writes> Writes { get; set; } = default!;
-        public virtual ICollection<Belongs> Belongs { get; set; } = default!;
-        public virtual ICollection<Borrows> Borrows { get; set; } = default!;
+        public int ReleaseDate { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Writes> Writes { get; set; } = null!;
+        [JsonIgnore]
+        public virtual ICollection<Belongs> Belongs { get; set; } = null!;
+        [JsonIgnore]
+        public virtual ICollection<Borrows> Borrows { get; set; } = null!;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Proiect_.net.DataBase;
+﻿using Microsoft.EntityFrameworkCore;
+using Proiect_.net.DataBase;
 using Proiect_.net.Models;
 using Proiect_.net.Repositories.GenericRepository;
 
@@ -11,6 +12,11 @@ namespace Proiect_.net.Repositories.CategoryRepository
         public Category FindByName(string Name)
         {
             return _table.FirstOrDefault(c => c.Name == Name);
+        }
+
+        public IEnumerable<Category> GetCategoriesAndBooks()
+        {
+            return _table.Include(c => c.Belongs).ThenInclude(b => b.Book).ToList();
         }
     }
 }
