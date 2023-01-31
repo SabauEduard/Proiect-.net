@@ -9,10 +9,9 @@ namespace Proiect_.net.Models
     {
         public Guid BookId { get; set; }
         
-        public virtual Book Book { get; set; } = null!;
+        public Book Book { get; set; } = null!;
         
         public Guid CategoryId { get; set; }
-        [JsonIgnore]
-        public virtual Category Category { get; set; } = null!;
+        public Category Category { get; set; } = null!;
     }
 }

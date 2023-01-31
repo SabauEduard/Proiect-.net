@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Helpers.Jwt;
+using Proiect_.net.Repositories;
 using Proiect_.net.Services.UserService;
 
 namespace Proiect_.net.Helpers.Middleware
@@ -12,7 +13,7 @@ namespace Proiect_.net.Helpers.Middleware
             _nextRequestDelegate = requestDelegate;
         }
         
-        public async Task Invoke(HttpContext httpContext, IUserService userService, IJwtUtils jwtUtils)
+        public async Task Invoke(HttpContext httpContext, IUserRepository userRepository, IJwtUtils jwtUtils)
         {
             var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
@@ -20,7 +21,7 @@ namespace Proiect_.net.Helpers.Middleware
 
             if (userId != Guid.Empty)
             {
-                httpContext.Items["User"] = await userService.GetUserById(userId);
+                httpContext.Items["User"] = await userRepository.FindByIdAsync(userId);
             }
 
             await _nextRequestDelegate(httpContext);

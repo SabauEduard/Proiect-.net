@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Belong;
 using Proiect_.net.Repositories.UnitOfWork;
 
 namespace Proiect_.net.Services.BelongsService
@@ -28,15 +29,16 @@ namespace Proiect_.net.Services.BelongsService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Belongs>> GetAllBelongs()
+        public async Task<IEnumerable<BelongsResponseDTO>> GetAllBelongs()
         {
-            return await _unitOfWork.belongsRepository.GetAllAsync();
+            var belongs = await _unitOfWork.belongsRepository.GetAllAsync();
+            return belongs.ConvertAll(b => new BelongsResponseDTO(b));
         }
 
-        public async Task<Belongs?> GetBelongsById(Guid BelongsId)
+        public async Task<BelongsResponseDTO?> GetBelongsById(Guid BelongsId)
         {
-            return await _unitOfWork.belongsRepository.FindByIdAsync(BelongsId);
-
+            var belongs = await _unitOfWork.belongsRepository.FindByIdAsync(BelongsId);
+            return new BelongsResponseDTO(belongs);
         }
     }
 }

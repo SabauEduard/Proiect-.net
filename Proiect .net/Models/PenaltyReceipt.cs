@@ -8,8 +8,7 @@ namespace Proiect_.net.Models
     {
         [ForeignKey("PenaltyId")]
         public int PaidAmount { get; set; } = 0;
-        public Guid PenaltyId { get; set; }
-        [JsonIgnore]
-        public virtual Penalty Penalty { get; set; } = null!;
+        public Guid PenaltyId { get; set; }      
+        public Penalty Penalty { get; set; } = null!;
     }
 }

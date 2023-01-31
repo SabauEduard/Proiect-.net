@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Borrow;
 using Proiect_.net.Repositories.UnitOfWork;
 
 namespace Proiect_.net.Services.BorrowsService
@@ -28,15 +29,16 @@ namespace Proiect_.net.Services.BorrowsService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Borrows>> GetAllBorrows()
+        public async Task<IEnumerable<BorrowsResponseDTO>> GetAllBorrows()
         {
-            return await _unitOfWork.borrowsRepository.GetAllAsync();
+            var borrows = await _unitOfWork.borrowsRepository.GetAllAsync();
+            return borrows.ConvertAll(b => new BorrowsResponseDTO(b));
         }
 
-        public async Task<Borrows?> GetBorrowsById(Guid BorrowsId)
+        public async Task<BorrowsResponseDTO?> GetBorrowsById(Guid BorrowsId)
         {
-            return await _unitOfWork.borrowsRepository.FindByIdAsync(BorrowsId);
-           
+            var borrows = await _unitOfWork.borrowsRepository.FindByIdAsync(BorrowsId);
+            return new BorrowsResponseDTO(borrows);      
         }
     }
 }

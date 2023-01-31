@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Write;
 using Proiect_.net.Repositories.UnitOfWork;
 
 namespace Proiect_.net.Services.WritesService
@@ -28,14 +29,16 @@ namespace Proiect_.net.Services.WritesService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Writes>> GetAllWrites()
+        public async Task<IEnumerable<WritesResponseDTO>> GetAllWrites()
         {
-            return await _unitOfWork.writesRepository.GetAllAsync();
+            var writes = await _unitOfWork.writesRepository.GetAllAsync();
+            return writes.ConvertAll(w => new WritesResponseDTO(w));
         }
 
-        public async Task<Writes> GetWritesById(Guid WritesId)
+        public async Task<WritesResponseDTO?> GetWritesById(Guid WritesId)
         {
-            return await _unitOfWork.writesRepository.FindByIdAsync(WritesId);
+            var writes = await _unitOfWork.writesRepository.FindByIdAsync(WritesId);
+            return new WritesResponseDTO(writes);
         }
     }
 }

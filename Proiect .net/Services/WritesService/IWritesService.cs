@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Write;
 
 namespace Proiect_.net.Services.WritesService
 {
@@ -6,7 +7,7 @@ namespace Proiect_.net.Services.WritesService
     {
         public Task CreateWrites(Guid AuthorId, Guid BookId);
         public Task DeleteWritesById(Guid WritesId);
-        public Task<Writes?> GetWritesById(Guid WritesId);
-        public Task<IEnumerable<Writes>> GetAllWrites();
+        public Task<WritesResponseDTO?> GetWritesById(Guid WritesId);
+        public Task<IEnumerable<WritesResponseDTO>> GetAllWrites();
     }
 }

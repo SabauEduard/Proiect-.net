@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Proiect_.net.Helpers.Attributes;
-using Proiect_.net.Models.DTOs.Belongs;
+using Proiect_.net.Models.DTOs.Belong;
 using Proiect_.net.Models.Enums;
 using Proiect_.net.Services.BelongsService;
 

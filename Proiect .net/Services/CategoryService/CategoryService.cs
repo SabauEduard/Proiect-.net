@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Categories;
 using Proiect_.net.Repositories.UnitOfWork;
 
 namespace Proiect_.net.Services.CategoryService
@@ -27,19 +28,16 @@ namespace Proiect_.net.Services.CategoryService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<IEnumerable<CategoryResponseDTO>> GetAllCategories()
         {
-            return await _unitOfWork.categoryRepository.GetAllAsync();
-        }
+            var categories = await _unitOfWork.categoryRepository.GetAllAsync();
+            return categories.ConvertAll(c => new CategoryResponseDTO(c));
+        }       
 
-        public IEnumerable<Category> GetCategoriesAndBooks()
+        public async Task<CategoryResponseDTO> GetCategoryById(Guid CategoryId)
         {
-            return _unitOfWork.categoryRepository.GetCategoriesAndBooks();
-        }
-
-        public async Task<Category> GetCategoryById(Guid CategoryId)
-        {
-            return await _unitOfWork.categoryRepository.FindByIdAsync(CategoryId);
+            var category = await _unitOfWork.categoryRepository.FindByIdAsync(CategoryId);
+            return new CategoryResponseDTO(category);
         }
     }
 }

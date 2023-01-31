@@ -1,7 +1,7 @@
 ﻿using Proiect_.net.Repositories.GenericRepository;
 using Proiect_.net.DataBase;
 using Proiect_.net.Models;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Proiect_.net.Repositories.UserRepository
 {
@@ -9,22 +9,22 @@ namespace Proiect_.net.Repositories.UserRepository
     {
         public UserRepository(DataBaseContext context) : base(context) { }
 
-        public IEnumerable<User> FindByFirstName(string FirstName)
+        public IEnumerable<User?> FindByFirstName(string FirstName)
         {
             return _table.Where(u => u.FirstName == FirstName);
         }
 
-        public IEnumerable<User> FindByLastName(string LastName)
+        public IEnumerable<User?> FindByLastName(string LastName)
         {
             return _table.Where(u => u.LastName == LastName);
         }
 
-        public User FindByEmail(string Email)
+        public User? FindByEmail(string Email)
         {
             return _table.FirstOrDefault(u => u.Email == Email);
         }
 
-        public User FindByUsername(string Username)
+        public User? FindByUsername(string Username)
         {
             return _table.FirstOrDefault(u => u.Username == Username);
         }
@@ -37,6 +37,11 @@ namespace Proiect_.net.Repositories.UserRepository
                         select b;
                         
             return books.ToList();
+        }
+
+        public IEnumerable<User?> PenaltiesOfUsers()
+        {
+            return _table.Include("Penalties");
         }
     }
 }

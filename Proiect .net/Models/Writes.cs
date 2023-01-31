@@ -7,12 +7,9 @@ namespace Proiect_.net.Models
 {
     public class Writes : BaseEntity
     {
-        public Guid BookId { get; set; }
-        [JsonIgnore]
-        public virtual Book Book { get; set; } = null!;
-        
-        public Guid AuthorId { get; set; }
-        [JsonIgnore]
-        public virtual Author Author { get; set; } = null!;
+        public Guid BookId { get; set; }        
+        public Book Book { get; set; } = null!;       
+        public Guid AuthorId { get; set; }     
+        public Author Author { get; set; } = null!;
     }
 }

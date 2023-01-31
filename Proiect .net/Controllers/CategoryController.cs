@@ -49,11 +49,5 @@ namespace Proiect_.net.Controllers
             return Ok(await _categoryService.GetAllCategories());
         }
         
-        [HttpGet("cat&books")]
-        [Authorization(Role.User, Role.Admin)]
-        public IActionResult GetCategoriesAndBooks()
-        {
-            return Ok(_categoryService.GetCategoriesAndBooks());
-        }
     }
 }

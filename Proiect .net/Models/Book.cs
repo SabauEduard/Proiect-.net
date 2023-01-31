@@ -11,11 +11,11 @@ namespace Proiect_.net.Models
         public int PageNumber { get; set; } 
         public string Language { get; set; } = null!;
         public int ReleaseDate { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<Writes> Writes { get; set; } = null!;
-        [JsonIgnore]
-        public virtual ICollection<Belongs> Belongs { get; set; } = null!;
-        [JsonIgnore]
-        public virtual ICollection<Borrows> Borrows { get; set; } = null!;
+        
+        public ICollection<Writes> Writes { get; set; } = null!;
+        
+        public ICollection<Belongs> Belongs { get; set; } = null!;
+        
+        public ICollection<Borrows> Borrows { get; set; } = null!;
     }
 }

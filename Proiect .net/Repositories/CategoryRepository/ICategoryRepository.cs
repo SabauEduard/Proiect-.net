@@ -5,7 +5,6 @@ namespace Proiect_.net.Repositories.CategoryRepository
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
-        public Category FindByName(string Name);
-        public IEnumerable<Category> GetCategoriesAndBooks();
+        public Category FindByName(string Name);       
     }
 }

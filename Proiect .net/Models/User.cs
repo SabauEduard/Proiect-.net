@@ -15,10 +15,8 @@ namespace Proiect_.net.Models
         [JsonIgnore]
         public string PasswordHash { get; set; } = null!;
 
-        public Role Role { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<Borrows> Borrows { get; set; } = null!;
-        [JsonIgnore]
-        public virtual ICollection<Penalty> Penalties { get; set; } = null!;
+        public Role Role { get; set; }      
+        public ICollection<Borrows> Borrows { get; set; } = null!;       
+        public ICollection<Penalty> Penalties { get; set; } = null!;
     }
 }

@@ -33,16 +33,17 @@ namespace Proiect_.net.Services.AuthorService
             _unitOfWork.authorRepository.Delete(author);
             await _unitOfWork.SaveAsync();
         }
-        public async Task<Author> GetAuthorById(Guid AuthorId)
+        public async Task<AuthorResponseDTO?> GetAuthorById(Guid AuthorId)
         {
-            return await _unitOfWork.authorRepository.FindByIdAsync(AuthorId);
+            var author = await _unitOfWork.authorRepository.FindByIdAsync(AuthorId);
+            return new AuthorResponseDTO(author);
         }
 
-        public async Task<IEnumerable<AuthorResponseDTO>> GetAllAuthors()
+        public async Task<IEnumerable<AuthorWBookResponseDTO>> GetAllAuthors()
         {
             var numberOfBooksByAuthor = _unitOfWork.authorRepository.NumberOfBooksByAuthors();
             var authors = await _unitOfWork.authorRepository.GetAllAsync();
-            return authors.ConvertAll(a => new AuthorResponseDTO(a, numberOfBooksByAuthor.FirstOrDefault(x => x.Item1 == a.Id).Item2));
+            return authors.ConvertAll(a => new AuthorWBookResponseDTO(a, numberOfBooksByAuthor.FirstOrDefault(x => x.Item1 == a.Id).Item2));
         }
     }
 }

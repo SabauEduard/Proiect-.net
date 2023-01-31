@@ -68,7 +68,7 @@ app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    pattern: "api/{controller}s/[action]");
 
 app.MapFallbackToFile("index.html"); ;
 

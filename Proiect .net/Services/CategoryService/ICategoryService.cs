@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Categories;
 
 namespace Proiect_.net.Services.CategoryService
 {
@@ -6,8 +7,7 @@ namespace Proiect_.net.Services.CategoryService
     {
         public Task CreateCategory(string Name);
         public Task DeleteCategoryById(Guid CategoryId);
-        public Task<Category?> GetCategoryById(Guid CategoryId);
-        public Task<IEnumerable<Category>> GetAllCategories();
-        public IEnumerable<Category> GetCategoriesAndBooks();
+        public Task<CategoryResponseDTO?> GetCategoryById(Guid CategoryId);
+        public Task<IEnumerable<CategoryResponseDTO>> GetAllCategories();       
     }
 }

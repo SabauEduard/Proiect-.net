@@ -24,7 +24,7 @@ namespace Proiect_.net.Helpers.Attributes
                 context.Result = unauthorizedStatusObject;
             }
 
-            var user = (User)context.HttpContext.Items["User"];          
+            var user = (User?)context.HttpContext.Items["User"];          
 
             if (user == null || !_roles.Contains(user.Role))
             {

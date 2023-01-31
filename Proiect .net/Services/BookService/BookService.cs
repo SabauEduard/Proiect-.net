@@ -1,4 +1,5 @@
 ﻿using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Books;
 using Proiect_.net.Repositories.UnitOfWork;
 
 namespace Proiect_.net.Services.BookService
@@ -37,14 +38,16 @@ namespace Proiect_.net.Services.BookService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooks()
+        public async Task<IEnumerable<BookResponseDTO>> GetAllBooks()
         {
-            return await _unitOfWork.bookRepository.GetAllAsync();
+            var books = await _unitOfWork.bookRepository.GetAllAsync();
+            return books.ConvertAll(b => new BookResponseDTO(b));
         }
 
-        public async Task<Book?> GetBookById(Guid BookId)
+        public async Task<BookResponseDTO?> GetBookById(Guid BookId)
         {
-            return await _unitOfWork.bookRepository.FindByIdAsync(BookId);
+            var book = await _unitOfWork.bookRepository.FindByIdAsync(BookId);
+            return new BookResponseDTO(book);
         }
     }
 }

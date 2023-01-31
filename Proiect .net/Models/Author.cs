@@ -7,9 +7,8 @@ namespace Proiect_.net.Models
     {   
         public string LastName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
-        public string? Nationality { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<Writes> Writes { get; set; } = null!;
+        public string? Nationality { get; set; }       
+        public ICollection<Writes> Writes { get; set; } = null!;
 
     }
 }

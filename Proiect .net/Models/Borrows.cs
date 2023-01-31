@@ -7,12 +7,10 @@ namespace Proiect_.net.Models
 {
     public class Borrows : BaseEntity
     {  
-        public Guid UserId { get; set; }
-        [JsonIgnore]
-        public virtual User User { get; set; } = null!;
+        public Guid UserId { get; set; }       
+        public User User { get; set; } = null!;
 
-        public Guid BookId { get; set; }
-        [JsonIgnore]
-        public virtual Book Book { get; set; } = null!;
+        public Guid BookId { get; set; }      
+        public Book Book { get; set; } = null!;
     }
 }

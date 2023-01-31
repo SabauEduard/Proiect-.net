@@ -1,5 +1,6 @@
 ﻿using Proiect_.net.Helpers.Jwt;
 using Proiect_.net.Models;
+using Proiect_.net.Models.DTOs.Books;
 using Proiect_.net.Models.DTOs.Users;
 using Proiect_.net.Models.Enums;
 using Proiect_.net.Repositories.UnitOfWork;
@@ -103,24 +104,34 @@ namespace Proiect_.net.Services.UserService
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<UserWithoutTokensResponseDTO>> GetAllUsers()
         {
-            return await _unitOfWork.userRepository.GetAllAsync();
+            var users = await _unitOfWork.userRepository.GetAllAsync();
+            return users.ConvertAll(u => new UserWithoutTokensResponseDTO(u));          
         }
 
-        public async Task<User> GetUserById(Guid UserId)
+        public async Task<UserWithoutTokensResponseDTO> GetUserById(Guid UserId)
         {
-            return await _unitOfWork.userRepository.FindByIdAsync(UserId);
+            var user = await _unitOfWork.userRepository.FindByIdAsync(UserId);
+            return new UserWithoutTokensResponseDTO(user);
         }
-        public User GetUserByUsername(string Username)
-        {
-            return _unitOfWork.userRepository.FindByUsername(Username);
-        }
-
-        public IEnumerable<Book?> GetBooksBorrowedByUser(string Username)
+        public UserWithoutTokensResponseDTO GetUserByUsername(string Username)
         {
             var user = _unitOfWork.userRepository.FindByUsername(Username);
-            return _unitOfWork.userRepository.BoooksBorrowedByUser(user.Id);
+            return new UserWithoutTokensResponseDTO(user);
+        }
+
+        public IEnumerable<BookResponseDTO?> GetBooksBorrowedByUser(string Username)
+        {
+            var user = _unitOfWork.userRepository.FindByUsername(Username);
+            var books = _unitOfWork.userRepository.BoooksBorrowedByUser(user.Id).ToList();
+            return books.ConvertAll(b => new BookResponseDTO(b));
+        }
+
+        public IEnumerable<UserWithPenaltiesResponseDTO?> GetPenaltiesOfUsers()
+        {
+            var users = _unitOfWork.userRepository.PenaltiesOfUsers().ToList();
+            return users.ConvertAll(u => new UserWithPenaltiesResponseDTO(u));
         }
     }
 }
