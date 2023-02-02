@@ -15,12 +15,12 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      <button (click)="logout()" *ngIf="!!(user$ | async)">
+        Logout
+      </button>
       <div>
         {{(user$ | async)?.firstName}}
       </div>
-      <button (click)="login()">
-        Login
-      </button>
       <div
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"

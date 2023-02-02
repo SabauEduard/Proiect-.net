@@ -2,6 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UserWithCredentials} from "../models/user.interface";
 import {BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,10 @@ export class UserService {
   baseUrl: string
   user$: BehaviorSubject<UserWithCredentials | null>
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string)
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router)
   {
     this.baseUrl = baseUrl;
-    this.user$ = new BehaviorSubject<UserWithCredentials | null>(null)
+    this.user$ = new BehaviorSubject<UserWithCredentials | null>(this.getUserFromLocalStorage())
     this.autoRefresh()
     this.saveUserToLocalStorage()
     this.getUserFromLocalStorage()
@@ -25,13 +26,24 @@ export class UserService {
   }
   getUserFromLocalStorage()
   {
-    let user = JSON.parse(localStorage.getItem(this.localStorageKey)??"null")
-    this.user$.next(user)
+    return JSON.parse(localStorage.getItem(this.localStorageKey)??"null")
+  }
+  register(username: string, password: string, email: string, lastName: string, firstName: string)
+  {
+    this.http.post<UserWithCredentials>(this.baseUrl + "api/Users/register", {username, password, email, lastName, firstName})
+      .subscribe((data)=>{
+        this.user$.next(data)
+        this.router.navigate(["/"])
+      })
   }
   login(username: string, password: string)
   {
     this.http.post<UserWithCredentials>(this.baseUrl + "api/Users/authenticate", {username, password})
-      .subscribe((data)=>this.user$.next(data))
+      .subscribe((data)=>{
+        this.user$.next(data);
+        this.router.navigate(["/"])
+        }
+      )
   }
   logout()
   {

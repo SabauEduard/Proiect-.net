@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {UserWithCredentials} from "../models/user.interface";
 import {UserService} from "../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,7 +12,7 @@ import {UserService} from "../services/user.service";
 export class NavMenuComponent {
   user$: Observable<UserWithCredentials | null>
   isExpanded = false;
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.user$ = userService.user$.asObservable()
   }
 
@@ -22,9 +23,9 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
-  login()
+  logout()
   {
-    this.userService.login("kanyjmk", "123")
+    this.userService.logout();
+    this.router.navigate(["/login"]);
   }
-
 }
